@@ -1,0 +1,119 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+        public class Main {
+
+            public static void main(String[] args) {
+                ArrayList<Aluno> listaAlunos = new ArrayList<>();
+                Scanner scanner = new Scanner(System.in);
+
+                int opcao = 0;
+
+                do {
+                    System.out.println("Escolha uma opção:");
+                    System.out.println("1 - Cadastrar");
+                    System.out.println("2 - Listar todos");
+                    System.out.println("3 - Pesquisar");
+                    System.out.println("4 - Remover");
+                    System.out.println("0 - Sair");
+                    opcao = scanner.nextInt();
+
+                    switch (opcao) {
+                        case 1:
+                            cadastrarAluno(listaAlunos, scanner);
+                            break;
+                        case 2:
+                            listarAlunos(listaAlunos);
+                            break;
+                        case 3:
+                            pesquisarAluno(listaAlunos, scanner);
+                            break;
+                        case 4:
+                            removerAluno(listaAlunos, scanner);
+                            break;
+                        case 0:
+                            System.out.println("Saindo do programa.");
+                            break;
+                        default:
+                            System.out.println("Opção inválida. Tente novamente.");
+                    }
+                } while (opcao != 0);
+
+                scanner.close();
+            }
+
+            public static void cadastrarAluno(ArrayList<Aluno> listaAlunos, Scanner scanner) {
+                System.out.println("Digite o nome do aluno:");
+                String nome = scanner.next();
+                System.out.println("Digite a matrícula do aluno:");
+                int matricula = scanner.nextInt();
+                System.out.println("Digite a data de nascimento do aluno (dd/mm/aaaa):");
+                String dataNascimento = scanner.next();
+
+                Aluno aluno = new Aluno(nome, matricula, dataNascimento);
+                listaAlunos.add(aluno);
+                System.out.println("Aluno cadastrado com sucesso!");
+            }
+
+            public static void listarAlunos(ArrayList<Aluno> listaAlunos) {
+                if (listaAlunos.isEmpty()) {
+                    System.out.println("Não há alunos cadastrados.");
+                } else {
+                    System.out.println("Lista de alunos:");
+                    for (Aluno aluno : listaAlunos) {
+                        System.out.println(aluno);
+                    }
+                }
+            }
+
+            public static void pesquisarAluno(ArrayList<Aluno> listaAlunos, Scanner scanner) {
+                System.out.println("Digite a matrícula do aluno que deseja pesquisar:");
+                int matricula = scanner.nextInt();
+
+                for (Aluno aluno : listaAlunos) {
+                    if (aluno.getMatricula() == matricula) {
+                        System.out.println("Aluno encontrado: " + aluno);
+                        return;
+                    }
+                }
+
+                System.out.println("Aluno não encontrado.");
+            }
+
+            public static void removerAluno(ArrayList<Aluno> listaAlunos, Scanner scanner) {
+                System.out.println("Digite a matrícula do aluno que deseja remover:");
+                int matricula = scanner.nextInt();
+
+                for (Aluno aluno : listaAlunos) {
+                    if (aluno.getMatricula() == matricula) {
+                        listaAlunos.remove(aluno);
+                        System.out.println("Aluno removido com sucesso.");
+                        return;
+                    }
+                }
+
+                System.out.println("Aluno não encontrado.");
+            }
+
+        }
+
+        class Aluno {
+            private String nome;
+            private int matricula;
+            private String dataNascimento;
+
+            public Aluno(String nome, int matricula, String dataNascimento) {
+                this.nome = nome;
+                this.matricula = matricula;
+                this.dataNascimento = dataNascimento;
+            }
+
+
+            public String toString() {
+                return "Nome: " + nome + ", Matrícula: " + matricula + ", Data de Nascimento: " + dataNascimento;
+            }
+
+            public int getMatricula() {
+                return matricula;
+            }
+        }
